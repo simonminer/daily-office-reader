@@ -31,5 +31,9 @@
   "bugs": {
     "url": "https://github.com/simonminer/daily-office-reader/issues"
   },
-  "homepage": "https://github.com/simonminer/daily-office-reader#readme"
+  "homepage": "https://github.com/simonminer/daily-office-reader#readme",
+  "dependencies": {
+    "jest": "26.1.0",
+    "jsdoc": "3.6.4"
+  }
 }
