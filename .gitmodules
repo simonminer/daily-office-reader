@@ -1,0 +1,3 @@
+[submodule "daily-office"]
+	path = daily-office
+	url = https://github.com/simonminer/daily-office
