@@ -1,0 +1,35 @@
+{
+  "name": "daily-office-reader",
+  "version": "1.0.0",
+  "description": "Tools to facilitate the reading of Christian Scriptures via the Daily Office.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonminer/daily-office-reader.git"
+  },
+  "keywords": [
+    "daily",
+    "office",
+    "book",
+    "of",
+    "common",
+    "prayer",
+    "lectionary",
+    "bible",
+    "scripture",
+    "christianity",
+    "prayer"
+  ],
+  "author": "Simon Miner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simonminer/daily-office-reader/issues"
+  },
+  "homepage": "https://github.com/simonminer/daily-office-reader#readme"
+}
