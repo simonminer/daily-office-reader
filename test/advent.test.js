@@ -21,16 +21,18 @@ describe('Advent class', function() {
 
     test('getAdventStartDate', () => {
         const advent = new Advent();
+        /*
         var year = new Date().getFullYear();
-        var startDate = new Date( [ year, advent.earliestStartMonth, advent.earliestStartDay ].join( '-' ) );
+        var startDate = new Date( year, advent.earliestStartMonth - 1, advent.earliestStartDay );
+        startDate.setTime( startDate.getTime() - startDate.getTimezoneOffset() * 60 * 1000 );
         var daysUntilSunday = 7 - startDate.getDay();
-        startDate = new Date( startDate.getTime() + daysUntilSunday * 80400000 );
+        startDate.setDate( startDate.getDate() + daysUntilSunday );
         var defaultStartDate = advent.getAdventStartDate();
         expect( defaultStartDate ).toEqual( startDate );
         expect( defaultStartDate.getDay() ).toBe( 0 );
         expect( advent.getAdventStartDate( year ) ).toEqual( startDate );
 
-        /*
+*/
         const years = {
             2007: '2007-12-02',
             2008: '2008-11-30',
@@ -42,7 +44,7 @@ describe('Advent class', function() {
             2014: '2014-11-30',
             2015: '2015-11-29',
             2016: '2016-11-27',
-            2016: '2017-12-03',
+            2017: '2017-12-03',
             2018: '2018-12-02',
             2019: '2019-12-01',
             2020: '2020-11-29',
@@ -57,12 +59,18 @@ describe('Advent class', function() {
             2029: '2029-12-02',
             2030: '2030-12-01'
         };
-        for ( year in Object.keys( years ) ) {
-            startDate = new Date( years[year] );
+        Object.keys( years ).forEach( year => {
+            var startDate = new Date( years[year] );
+            var dayOfWeek = startDate.getUTCDay();
+            if ( dayOfWeek ) {
+                var daysUntilSunday = 7 - dayOfWeek;
+                startDate.setDate( startDate.getDate() + daysUntilSunday );
+            }
+            // Need to adjust for local timezone offset
+            startDate.setTime( startDate.getTime() + startDate.getTimezoneOffset() * 60 * 1000 );
             expect( advent.getAdventStartDate( year ) ).toEqual( startDate );
-            expect( startDate.getDay() ).toBe( 0 )
-        }
-        */
+            expect( startDate.getUTCDay() ).toBe( 0 );
+        });
 
     });
 });
