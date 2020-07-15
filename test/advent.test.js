@@ -12,14 +12,14 @@ const Advent = require('../lib/advent');
 
 describe('Advent class', function() {
 
-    test('constructor and default field values', () => {
+    test( 'constructor and default field values', () => {
         const advent = new Advent();
         expect(advent instanceof Advent).toBe(true);
         expect(advent.earliestStartMonth).toBe(earliestStartMonth);
         expect(advent.earliestStartDay).toBe(earliestStartDay);
     });
 
-    test('getAdventStartDate', () => {
+    test( 'getAdventStartDate method', () => {
         const advent = new Advent();
         var year = new Date().getFullYear();
         var startDate = new Date( year, advent.earliestStartMonth - 1, advent.earliestStartDay );
@@ -73,6 +73,16 @@ describe('Advent class', function() {
             expect( startDate.getUTCDay() ).toBe( 0 );
         });
 
+    });
+
+    test( 'daysSinceStartOfAdvent method', () => {
+        const advent = new Advent();
+        const today = new Date();
+        today.setHours( 0, 0, 0, 0 );
+        const thisYear = today.getFullYear();
+        const adventStartDate = advent.getAdventStartDate( thisYear ).getTime() >= today.getTime() ? advent.getAdventStartDate( thisYear - 1 ) : advent.getAdventStartDate( thisYear )
+        var numberOfDays = Math.floor( ( today.getTime() - adventStartDate.getTime() ) / (  1000 * 60 * 60 * 24 ) );
+        expect( advent.daysSinceStartOfAdvent( today ) ).toBe( numberOfDays );
     });
 
 });
