@@ -21,18 +21,19 @@ describe('Advent class', function() {
 
     test('getAdventStartDate', () => {
         const advent = new Advent();
-        /*
         var year = new Date().getFullYear();
         var startDate = new Date( year, advent.earliestStartMonth - 1, advent.earliestStartDay );
-        startDate.setTime( startDate.getTime() - startDate.getTimezoneOffset() * 60 * 1000 );
-        var daysUntilSunday = 7 - startDate.getDay();
-        startDate.setDate( startDate.getDate() + daysUntilSunday );
+        var dayOfWeek = startDate.getUTCDay();
+        if ( dayOfWeek ) {
+            var daysUntilSunday = 7 - dayOfWeek;
+            startDate.setDate( startDate.getDate() + daysUntilSunday );
+        }
+
         var defaultStartDate = advent.getAdventStartDate();
         expect( defaultStartDate ).toEqual( startDate );
         expect( defaultStartDate.getDay() ).toBe( 0 );
         expect( advent.getAdventStartDate( year ) ).toEqual( startDate );
 
-*/
         const years = {
             2007: '2007-12-02',
             2008: '2008-11-30',
@@ -73,4 +74,5 @@ describe('Advent class', function() {
         });
 
     });
+
 });
