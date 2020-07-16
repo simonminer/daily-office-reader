@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/simonminer/daily-office-reader#readme",
   "dependencies": {
+    "daily-office-lectionary": "0.9.1",
     "jest": "26.1.0",
     "jsdoc": "3.6.4"
   }
