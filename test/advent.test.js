@@ -5,6 +5,8 @@
  *
  */
 
+var moment = require( 'moment' );
+
 const earliestPossibleStartMonth = 11;
 const earliestPossibleStartDay = 27;
 
@@ -21,17 +23,15 @@ describe('Advent class', function() {
 
     test( 'getStartDate method', () => {
         const advent = new Advent();
-        var year = new Date().getFullYear();
-        var startDate = new Date( year, advent.earliestPossibleStartMonth - 1, advent.earliestPossibleStartDay );
-        var dayOfWeek = startDate.getUTCDay();
-        if ( dayOfWeek ) {
-            var daysUntilSunday = 7 - dayOfWeek;
-            startDate.setDate( startDate.getDate() + daysUntilSunday );
+        var year = moment().year();
+        var startDate = moment( [ year, advent.earliestPossibleStartMonth - 1, advent.earliestPossibleStartDay ] );
+        if ( startDate.day() != 0 ) {
+            startDate.day( 7 );
         }
 
         var defaultStartDate = advent.getStartDate();
         expect( defaultStartDate ).toEqual( startDate );
-        expect( defaultStartDate.getDay() ).toBe( 0 );
+        expect( defaultStartDate.day() ).toBe( 0 );
         expect( advent.getStartDate( year ) ).toEqual( startDate );
 
         const years = {
@@ -61,28 +61,28 @@ describe('Advent class', function() {
             2030: '2030-12-01'
         };
         Object.keys( years ).forEach( year => {
-            var startDate = new Date( years[year] );
-            var dayOfWeek = startDate.getUTCDay();
-            if ( dayOfWeek ) {
-                var daysUntilSunday = 7 - dayOfWeek;
-                startDate.setDate( startDate.getDate() + daysUntilSunday );
+            var startDate = moment( years[year] );
+            if ( startDate.day() != 0 ) {
+                startDate.day( 7 );
             }
             // Need to adjust for local timezone offset
-            startDate.setTime( startDate.getTime() + startDate.getTimezoneOffset() * 60 * 1000 );
-            expect( advent.getStartDate( year ) ).toEqual( startDate );
-            expect( startDate.getUTCDay() ).toBe( 0 );
+            expect( advent.getStartDate( year ).format() ).toEqual( startDate.format() );
+            expect( startDate.day() ).toBe( 0 );
         });
 
     });
 
     test( 'daysSinceStart method', () => {
         const advent = new Advent();
-        const today = new Date();
-        today.setHours( 0, 0, 0, 0 );
-        const thisYear = today.getFullYear();
-        const adventStartDate = advent.getStartDate( thisYear ).getTime() >= today.getTime() ? advent.getStartDate( thisYear - 1 ) : advent.getStartDate( thisYear )
-        var numberOfDays = Math.floor( ( today.getTime() - adventStartDate.getTime() ) / (  1000 * 60 * 60 * 24 ) );
-        expect( advent.daysSinceStart( today ) ).toBe( numberOfDays );
+        const now = moment();
+        const thisYear = now.year();
+
+        var adventStartDate = advent.getStartDate( thisYear );
+        if ( now < adventStartDate ) {
+            adventStartDate = advent.getStartDate( thisYear - 1 );
+        }
+        var numberOfDays = now.diff( adventStartDate, 'days' );
+        expect( advent.daysSinceStart( now ) ).toBe( numberOfDays );
     });
 
 });
